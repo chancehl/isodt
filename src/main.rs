@@ -1,4 +1,4 @@
-use chrono::{DateTime, NaiveDate, NaiveDateTime, NaiveTime, TimeZone, Utc};
+use chrono::{NaiveDate, NaiveDateTime, NaiveTime, TimeZone, Utc};
 use clap::Parser;
 use models::args::Args;
 use regex::Regex;
@@ -16,23 +16,12 @@ fn main() {
     let date_time_regex =
         Regex::new("^\\d{2}\\/\\d{2}\\/\\d{4}\\s{1}\\d{2}:\\d{2}:\\d{2}$").unwrap();
 
-    let date_time_offset_format = "%m/%d/%Y %H:%M:%S %z".to_string();
-    let date_time_offest_regex =
-        Regex::new("^\\d{2}\\/\\d{2}\\/\\d{4}\\s{1}\\d{2}:\\d{2}:\\d{2}\\s?[\\-\\+]\\d{2}:\\d{2}$")
-            .unwrap();
-
     if let Some(date) = &args.date {
         if date_time_regex.is_match(date) {
             println!(
                 "{:?}",
                 Utc.datetime_from_str(date, &date_time_format)
                     .expect("Could not parse date time from date time")
-            )
-        } else if date_time_offest_regex.is_match(date) {
-            println!(
-                "{:?}",
-                DateTime::parse_from_str(date, &date_time_offset_format)
-                    .expect("Could not parse date time from date time with offset")
             )
         } else if date_regex.is_match(date) {
             let naive_date =
@@ -56,6 +45,7 @@ fn main() {
         }
     } else {
         println!("{:?}", Utc::now());
-        process::exit(0);
     };
+
+    process::exit(0);
 }
