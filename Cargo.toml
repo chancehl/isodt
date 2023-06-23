@@ -1,6 +1,6 @@
 [package]
 name = "isodt"
-version = "0.1.0"
+version = "0.1.2"
 edition = "2021"
 description = "A simple CLI utility for converting a date to IS0-8601 format"
 license = "MIT"
